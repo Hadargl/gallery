@@ -1,62 +1,55 @@
+{% extends 'viewer/base.html' %}
+
 {% load static %}
 
-<!DOCTYPE html>
+{% block content %}
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Viewer home</title>
-    </head>
     <body>
-        <script src="{% static 'viewer/js/three.min.js' %}"></script>
-        <script src="{% static 'viewer/js/GLTFLoader.js' %}"></script>
-        <script src="{% static 'viewer/js/OrbitControls.js' %}"></script>
-        <script type="module">
-            let scene, camera, renderer;
-
-            function init() {
-                scene = new THREE.Scene();
-                scene.background = new THREE.Color(0xB1c1B1);
-
-                camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 5000 );
-                camera.rotation.x = 45/180*Math.PI;
-                camera.rotation.y = 90/180*Math.PI;
-                camera.rotation.z = 3.5;
-                camera.position.x = 2.4;
-                camera.position.y = 0.5;
-                camera.position.z = 1;
-
-                renderer = new THREE.WebGLRenderer({antialias:true});
-                renderer.setSize( window.innerWidth, window.innerHeight );
-                document.body.appendChild(renderer.domElement);
-
-
-                const controls = new THREE.OrbitControls(camera,renderer.domElement);
-                controls.addEventListener('change', renderer);
-
-
-                const hlight = new THREE.AmbientLight (0x404040,100);
-                scene.add(hlight);
-                const light = new THREE.PointLight(0xc4c4c4,0.05);
-                light.position.set(0,300,500);
-                scene.add(light);
-
-                let loader = new THREE.GLTFLoader();
-                loader.load("{% static 'viewer/js/bee_gltf.gltf' %}", function(gltf){
-                    const iPod = gltf.scene.children[0];
-                    iPod.scale.set(1,1,1)
-                    scene.add(gltf.scene);
-                    renderer.render(scene, camera);
-                    animate();
-                });
-            }
-            function animate(){
-                renderer.render(scene, camera);
-                requestAnimationFrame(animate);
-            };
-            init();
-            animate();
-        </script>
+        <div class="container p-5">
+            <div class="row d-flex">
+                <div class="col text-center">
+                    <h6>Galleries</h6>
+                </div>
+            </div>
+            <div class="accordion m-5 accordion-flush" id="accordionExample">
+                <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Gallery 1
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                    <strong><a href="/viewer/gallery1">gallery 1</a></strong> showcases some stuff. The explanation of the work can go here.
+                    </div>
+                </div>
+                </div>
+                <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Gallery 2
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                    <strong><a>gallery 2</a></strong> showcases some other stuff but doesn't lead anywhere yet.
+                    </div>
+                </div>
+                </div>
+                <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Gallery 3
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                    <strong><a>gallery 3</a></strong> goes here and you get the idea.
+                    </div>
+                </div>
+                </div>
+            </div>
+          </div>
     </body>
 </html>
+{% endblock %}
